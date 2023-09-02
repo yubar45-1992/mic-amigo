@@ -24,7 +24,7 @@ management:
   endpoints:
     web:
       exposure:
-        exclude: *
+        exclude: "*"
   endpoint:
     health:
       show-details: always
@@ -33,11 +33,16 @@ resilience4j:
   circuitbreaker:
     instances:
       inventory:
-      registerHealthIndicator: true
-      event-consumer-buffer-size: 10
-      sliding-window-type: COUNT_BASED
-      slidingWindowSize: 5
-      failureRateThreshold: 50
-      waitDurationInOpenState: 5s
-      permittedNumberOfCallsInHalfOpenState: 3
-      automaticTransitionFromOpenToHalfOpenEnabled: true
+        registerHealthIndicator: true
+        event-consumer-buffer-size: 10
+        sliding-window-type: COUNT_BASED
+        slidingWindowSize: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 5s
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+  timelimiter:
+    instances:
+      inventory:
+        timeout-duration:
+          seconds: 3
