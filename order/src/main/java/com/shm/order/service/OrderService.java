@@ -26,7 +26,7 @@ public class OrderService {
     private final RestTemplate restTemplate;
 
     @Transactional
-    public void save(OrderRequestDto orderRequest) {
+    public String save(OrderRequestDto orderRequest) {
         List<String> skuCodes = orderRequest.getOrderLineItemDtos().stream()
                 .map(OrderLineItemDto::getSkuCode)
                 .toList();
@@ -41,7 +41,7 @@ public class OrderService {
         boolean allProductInStock = Arrays.stream(inventoryResponseDtos).allMatch(InventoryResponseDto::getIsInStock);
         if (allProductInStock) {
             orderRepository.save(changeOrderDtoToEntity(orderRequest));
-
+            return "order placed";
         } else throw new IllegalArgumentException("product is not in stock");
 
 
